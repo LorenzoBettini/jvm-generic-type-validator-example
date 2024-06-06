@@ -9,9 +9,11 @@
 package org.eclipse.xtext.example.domainmodel.ui.quickfix;
 
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.xtext.example.domainmodel.domainmodel.Entity;
 import org.eclipse.xtext.example.domainmodel.domainmodel.Feature;
 import org.eclipse.xtext.example.domainmodel.validation.IssueCodes;
+import org.eclipse.xtext.nodemodel.ICompositeNode;
+import org.eclipse.xtext.nodemodel.ILeafNode;
+import org.eclipse.xtext.nodemodel.util.NodeModelUtils;
 import org.eclipse.xtext.ui.editor.model.IXtextDocument;
 import org.eclipse.xtext.ui.editor.model.edit.IModificationContext;
 import org.eclipse.xtext.ui.editor.quickfix.Fix;
@@ -28,7 +30,18 @@ public class DomainmodelQuickfixProvider extends XbaseQuickfixProvider {
 	public void makeAbstract(final Issue issue, IssueResolutionAcceptor acceptor) {
 		acceptor.accept(issue, "Make entity abstract",
 				"Make entity abstract", "Entity.gif",
-			(EObject element, IModificationContext context) -> ((Entity) element).setAbstract(true)
+			(EObject element, IModificationContext context) -> {
+				IXtextDocument document = context.getXtextDocument();
+				ICompositeNode clazzNode = NodeModelUtils.findActualNodeFor(element);
+				int offset = -1;
+				for (ILeafNode leafNode : clazzNode.getLeafNodes()) {
+					if (leafNode.getText().equals("entity")) {
+						offset = leafNode.getOffset();
+						break;
+					}
+				}
+				document.replace(offset, 0, "abstract ");
+			}
 		);
 	}
 
