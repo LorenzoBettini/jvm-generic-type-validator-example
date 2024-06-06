@@ -9,6 +9,7 @@
 package org.eclipse.xtext.example.domainmodel.ui.quickfix;
 
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.xtext.example.domainmodel.domainmodel.Entity;
 import org.eclipse.xtext.example.domainmodel.domainmodel.Feature;
 import org.eclipse.xtext.example.domainmodel.validation.IssueCodes;
 import org.eclipse.xtext.ui.editor.model.IXtextDocument;
@@ -23,6 +24,14 @@ import org.eclipse.xtext.xbase.ui.quickfix.XbaseQuickfixProvider;
  * Custom quickfixes. See https://www.eclipse.org/Xtext/documentation/310_eclipse_support.html#quick-fixes
  */
 public class DomainmodelQuickfixProvider extends XbaseQuickfixProvider {
+	@Fix(org.eclipse.xtext.xbase.validation.IssueCodes.CLASS_MUST_BE_ABSTRACT)
+	public void makeAbstract(final Issue issue, IssueResolutionAcceptor acceptor) {
+		acceptor.accept(issue, "Make entity abstract",
+				"Make entity abstract", "Entity.gif",
+			(EObject element, IModificationContext context) -> ((Entity) element).setAbstract(true)
+		);
+	}
+
 	@Fix(IssueCodes.INVALID_TYPE_NAME)
 	public void fixTypeName(Issue issue, IssueResolutionAcceptor acceptor) {
 		acceptor.accept(issue, "Capitalize name", "Capitalize name of '" + issue.getData()[0] + "'", "upcase.png", // exemplary textual modification
