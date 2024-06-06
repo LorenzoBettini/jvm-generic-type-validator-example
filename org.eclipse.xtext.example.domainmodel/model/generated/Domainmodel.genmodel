@@ -17,7 +17,9 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Domainmodel.ecore#//PackageDeclaration/elements"/>
     </genClasses>
     <genClasses ecoreClass="Domainmodel.ecore#//Entity">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Domainmodel.ecore#//Entity/abstract"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Domainmodel.ecore#//Entity/superType"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Domainmodel.ecore#//Entity/implements"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Domainmodel.ecore#//Entity/features"/>
     </genClasses>
     <genClasses ecoreClass="Domainmodel.ecore#//Feature">

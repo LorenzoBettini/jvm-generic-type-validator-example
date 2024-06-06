@@ -34,6 +34,11 @@ class DomainmodelJvmModelInferrer extends AbstractModelInferrer {
 			documentation = entity.documentation
 			superClass = entity.superType
 
+			abstract = entity.abstract
+			for (i : entity.implements) {
+				addSuperInterface(i)
+			}
+
 			// let's add a default constructor
 			members += entity.toConstructor []
 

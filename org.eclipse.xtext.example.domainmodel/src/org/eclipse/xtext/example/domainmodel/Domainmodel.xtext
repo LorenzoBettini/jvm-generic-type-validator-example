@@ -23,7 +23,10 @@ PackageDeclaration:
 	'}';
 
 Entity:
-	'entity' name=ValidID ('extends' superType=JvmParameterizedTypeReference)? '{'
+	(abstract ?= 'abstract')?
+	'entity' name=ValidID ('extends' superType=JvmParameterizedTypeReference)?
+	('implements' implements+=JvmParameterizedTypeReference (',' implements+=JvmParameterizedTypeReference)*)?
+	'{'
 		features+=Feature*
 	'}';
 
